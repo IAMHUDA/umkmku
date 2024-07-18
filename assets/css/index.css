@@ -1,0 +1,122 @@
+/* CSS Tambahan untuk Gaya */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    height: 100vh;
+}
+
+.order-summary, .scroll-section, .form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.order-summary {
+    flex: 1;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.scroll-section {
+    flex: 2;
+    overflow-y: auto;
+    height: 100%;
+    gap: 20px;
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section {
+    flex: 1;
+}
+
+.menu-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f2f2f2;
+    border-radius: 8px; /* Sudut bulat */
+}
+
+.item {
+    display: flex;
+    flex-direction: column; /* Elemen .item menunjukkan kolom*/
+    width: 150px; /* Lebar .item */
+    margin: 10px; /* Ruang antara elemen .item */
+    text-align: center;
+}
+
+.item img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.menu-toggle i {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .item {
+        width: 30%;
+        margin: 5px;
+    }
+
+    .item img {
+        width: 100%;
+    }
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table td, .order-table th {
+    padding: 8px;
+}
+
+.order-table th {
+    text-align: left;
+}
+
+.order-table .item-total {
+    text-align: right;
+}
+
+.total-amount {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+}

@@ -1,0 +1,109 @@
+ /* Custom CSS for responsiveness */
+ body {
+    font-family: Arial, sans-serif;
+}
+/* Style for the search input */
+#search,#searchCustomerName,#searchOrderDate,#searchPaymentMethod,#searchPaymentStatus {
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+/* Style for the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* Style for table header */
+.table thead th {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Style for table body */
+.table tbody td {
+    border: 1px solid #dee2e6;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Alternate row color for better readability */
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style for edit and delete buttons */
+.btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.container {
+    padding: 20px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table td, .table th {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .btn-edit, .btn-delete {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+}
