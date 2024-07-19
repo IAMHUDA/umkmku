@@ -165,82 +165,53 @@ function deleteOrder(orderId) {
         }
     });
 }
-  
+
 
   // Function to search and filter table rows
-  function searchByName() {
-    const input = document.getElementById('searchCustomerName').value.toUpperCase();
+  function searchOrders() {
+    const customerName = document.getElementById('searchCustomerName').value.toUpperCase();
+    const orderDate = document.getElementById('searchOrderDate').value;
+    const paymentMethod = document.getElementById('searchPaymentMethod').value.toUpperCase();
+    const paymentStatus = document.getElementById('searchPaymentStatus').value.toUpperCase();
+
     const table = document.querySelector('.table'); // Assuming your table has class 'table'
     const rows = table.getElementsByTagName('tr');
 
-    for (let i = 0; i < rows.length; i++) {
-        const customerName = rows[i].getElementsByTagName('td')[1]; // Assuming customer name is in the second column (index 1)
-        if (customerName) {
-            const textValue = customerName.textContent || customerName.innerText;
-            if (textValue.toUpperCase().indexOf(input) > -1) {
-                rows[i].style.display = '';
-            } else {
-                rows[i].style.display = 'none';
-            }
-        }       
+    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header row
+        const customerNameCell = rows[i].getElementsByTagName('td')[1]; // Assuming customer name is in the second column (index 1)
+        const orderDateCell = rows[i].getElementsByTagName('td')[2]; // Assuming order date is in the third column (index 2)
+        const paymentMethodCell = rows[i].getElementsByTagName('td')[3]; // Assuming payment method is in the fourth column (index 3)
+        const paymentStatusCell = rows[i].getElementsByTagName('td')[4]; // Assuming payment status is in the fifth column (index 4)
+
+        if (customerNameCell && orderDateCell && paymentMethodCell && paymentStatusCell) {
+            const customerNameText = customerNameCell.textContent.toUpperCase();
+            const orderDateText = orderDateCell.textContent;
+            const paymentMethodText = paymentMethodCell.textContent.toUpperCase();
+            const paymentStatusText = paymentStatusCell.textContent.toUpperCase();
+
+            const isMatch = (
+                (customerName === "" || customerNameText.includes(customerName)) &&
+                (orderDate === "" || orderDateText.includes(orderDate)) &&
+                (paymentMethod === "" || paymentMethodText.includes(paymentMethod)) &&
+                (paymentStatus === "" || paymentStatusText.includes(paymentStatus))
+            );
+
+            rows[i].style.display = isMatch ? "" : "none";
+        }
     }
 }
 
-function searchByOrderDate() {
-    const input = document.getElementById('searchOrderDate').value;
-    const table = document.querySelector('.table'); // Assuming your table has class 'table'
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-        const orderDate = rows[i].getElementsByTagName('td')[2]; // Assuming order date is in the third column (index 2)
-        if (orderDate) {
-            const textValue = orderDate.textContent || orderDate.innerText;
-            if (textValue.includes(input)) {
-                rows[i].style.display = '';
-            } else {
-                rows[i].style.display = 'none';
-            }
-        }       
+// Add event listener for customer name input to reset the table when cleared
+document.getElementById('searchCustomerName').addEventListener('input', function() {
+    if (this.value === '') {
+        loadOrders(); // Reload all orders when the input is cleared
     }
-}
+});
 
-function searchByPaymentMethod() {
-    const input = document.getElementById('searchPaymentMethod').value.toUpperCase();
-    const table = document.querySelector('.table'); // Assuming your table has class 'table'
-    const rows = table.getElementsByTagName('tr');
+// Call searchOrders when other input fields change
+document.getElementById('searchOrderDate').addEventListener('input', searchOrders);
+document.getElementById('searchPaymentMethod').addEventListener('input', searchOrders);
+document.getElementById('searchPaymentStatus').addEventListener('input', searchOrders);
 
-    for (let i = 0; i < rows.length; i++) {
-        const paymentMethod = rows[i].getElementsByTagName('td')[3]; // Assuming payment method is in the fourth column (index 3)
-        if (paymentMethod) {
-            const textValue = paymentMethod.textContent || paymentMethod.innerText;
-            if (textValue.toUpperCase().indexOf(input) > -1) {
-                rows[i].style.display = '';
-            } else {
-                rows[i].style.display = 'none';
-            }
-        }       
-    }
-}
-
-function searchByPaymentStatus() {
-    const input = document.getElementById('searchPaymentStatus').value.toUpperCase();
-    const table = document.querySelector('.table'); // Assuming your table has class 'table'
-    const rows = table.getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-        const paymentStatus = rows[i].getElementsByTagName('td')[4]; // Assuming payment status is in the fifth column (index 4)
-        if (paymentStatus) {
-            const textValue = paymentStatus.textContent || paymentStatus.innerText;
-            if (textValue.toUpperCase().indexOf(input) > -1) {
-                rows[i].style.display = '';
-            } else {
-                rows[i].style.display = 'none';
-            }
-        }       
-    }
-}
-
-
-
-  // Panggil fungsi loadOrders saat halaman dimuat
-  window.onload = loadOrders;
+// Panggil fungsi loadOrders saat halaman dimuat
+window.onload = loadOrders;
