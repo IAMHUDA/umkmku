@@ -32,7 +32,6 @@ body {
 /* Gaya untuk combined-section */
 .combined-section {
   background-color: #f8f9fa; /* Warna latar belakang */
-  padding: 20px; /* Padding di sekitar konten */
   border-radius: 8px; /* Sudut melengkung untuk kontainer */
   display: flex; /* Menggunakan flexbox untuk tata letak */
   flex-direction: column; /* Mengatur elemen secara vertikal */
@@ -41,6 +40,7 @@ body {
 
 /* Gaya untuk sidebar */
 .sidebar {
+  
   background-color: #be2623; /* Warna latar belakang sidebar */
   color: #fff; /* Warna teks sidebar */
   padding: 15px; /* Padding di dalam sidebar */
@@ -82,13 +82,15 @@ body {
 
 /* Gaya untuk order-form */
 .order-form {
-  background-color: #fff; /* Warna latar belakang form */
+
+   background-color: #fff; /* Warna latar belakang form */
   padding: 15px; /* Padding di dalam form */
   border-radius: 8px; /* Sudut melengkung untuk form */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efek bayangan ringan */
 }
 
 .form-container {
+  
   max-width: 100%; /* Memastikan form tidak melebihi lebar kontainer */
 }
 
@@ -105,6 +107,12 @@ body {
   background-color: #be2623; /* Warna latar belakang tombol primer */
   border-color: #be2623; /* Warna border tombol primer */
 }
+
+.btn-primary:hover {
+  background-color: #aa1d1b; /* Warna latar belakang tombol primer */
+  border-color: #be2623; /* Warna border tombol primer */
+}
+
 
 .btn-secondary {
   background-color: #6c757d; /* Warna latar belakang tombol sekunder */
@@ -123,8 +131,11 @@ body {
 
 /* Kontainer utama */
 .container {
+margin-top: 30px; 
   display: flex; /* Menggunakan flexbox untuk tata letak */
   gap: 20px; /* Jarak antara kolom */
+  margin-bottom: 30px; 
+
 }
 
 /* Gaya untuk kolom kiri */
@@ -136,6 +147,8 @@ body {
 .col-md-6 {
   flex: 0 0 50%; /* Lebar kolom tengah 50% dari kontainer utama */
 }
+
+
 
 /* Gaya untuk menu-section */
 .menu-section {
@@ -171,14 +184,23 @@ body {
   margin-right: 8px; /* Jarak antara ikon dan teks */
 }
 
-.menu-toggle:hover {
-  background-color: #be2623; /* Warna latar belakang saat hover */
-  color: #fff; /* Warna teks saat hover */
+.menu-toggle:hover, .menu-toggle.active {
+  background-color: #be2623; /* Warna latar belakang saat hover atau aktif */
+  color: #fff; /* Warna teks saat hover atau aktif */
 }
+
+.item img{
+  width: 100%;
+  height: auto;
+}
+
 
 /* Gaya untuk scroll-container */
 .scroll-container {
-  max-height: 400px; /* Maksimum tinggi untuk scroll container */
+  display: grid; /* Menggunakan grid layout untuk tata letak */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 3 kolom otomatis */
+  gap: 10px; /* Jarak antara item */
+  max-height: 575px; /* Maksimum tinggi untuk scroll container */
   overflow-y: auto; /* Menambahkan scroll vertikal jika konten melebihi tinggi */
   padding: 10px; /* Padding di dalam scroll container */
   border-radius: 8px; /* Sudut melengkung untuk container */
@@ -186,9 +208,6 @@ body {
   border: 1px solid #e0e0e0; /* Warna border container */
 }
 
-.item-list {
-  display: none; /* Menyembunyikan semua item list secara default */
-}
 
 .item-list.active {
   display: block; /* Menampilkan item list yang aktif */
@@ -196,14 +215,32 @@ body {
 
 /* Gaya untuk item dalam list */
 .item-list .item {
+  flex: 0 0 calc(25% - 10px); /* Lebar item, dikurangi dengan gap */
+  box-sizing: border-box; /* Termasuk padding dan border dalam ukuran elemen */
   border-bottom: 1px solid #e0e0e0; /* Warna border item */
-  padding: 10px 0; /* Padding di atas dan bawah item */
+  padding: 10px; /* Padding di dalam item */
   color: #333; /* Warna teks item */
+  background-color: #f8f9fa; /* Warna latar belakang item */
+  border-radius: 8px; /* Sudut melengkung untuk item */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efek bayangan ringan */
+  margin-bottom: 10px; /* Jarak bawah item */
+}
+
+.item-list .item h4, .item-list .item p {
+  margin: 0; /* Menghapus margin default */
+  font-size: 0.875rem; /* Ukuran font yang lebih kecil */
+}
+
+.item-list .item img {
+  max-width: 100%; /* Memastikan gambar tidak melebihi lebar item */
+  height: auto; /* Memastikan gambar memiliki proporsi yang benar */
 }
 
 .item-list .item:last-child {
   border-bottom: none; /* Menghapus border bawah untuk item terakhir */
 }
+
+
 
 
 
@@ -217,15 +254,18 @@ body {
 
 /* Gaya untuk order-summary */
 .order-summary {
+  height: 745px; /* Atur sesuai kebutuhan, misalnya 500px */
+  overflow-y: auto;
   background-color: #fff; /* Warna latar belakang putih */
   padding: 20px; /* Padding di sekitar konten */
   border-radius: 8px; /* Sudut melengkung */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan ringan */
-  border: 1px solid grey; /* Border merah */
+  border: 1px solid white; /* Border merah */
 }
 
 /* Gaya untuk order-summary h2 */
 .order-summary h2 {
+  margin-bottom: 200px;
   color: #be2623; /* Warna teks merah */
   margin-bottom: 20px; /* Jarak bawah */
   font-size: 24px; /* Ukuran font */
@@ -234,18 +274,20 @@ body {
 
 /* Gaya untuk order-table */
 .order-table {
+  
   width: 100%; /* Lebar tabel penuh */
   border-collapse: collapse; /* Menghilangkan jarak antar border */
 }
 
 .order-table th,
 .order-table td {
-  padding: 10px; /* Padding di sel tabel */
+  
   text-align: left; /* Menyelaraskan teks di kiri */
-  border-bottom: 1px solid #e0e0e0; /* Warna border bawah abu-abu */
+
 }
 
 .order-table th {
+  
   background-color: #be2623; /* Latar belakang header tabel */
   color: white; /* Warna teks header merah */
 }
@@ -256,11 +298,56 @@ body {
 
 /* Gaya untuk total-amount */
 .total-amount {
-  margin-top: 20px; /* Jarak atas untuk total amount */
+  margin-top: 10px; /* Jarak atas untuk total amount */
   font-size: 18px; /* Ukuran font */
   font-weight: bold; /* Tebal */
   color: black; /* Warna teks merah */
+
 }
+
+
+
+/* Media Queries untuk perangkat mobile */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Mengatur tata letak menjadi kolom di perangkat mobile */
+  }
+
+  .col-md-3, .col-md-6 {
+    width: 100%; /* Lebar kolom 100% dari kontainer utama */
+    flex: 1 0 auto; /* Mengatur kolom agar fleksibel */
+  }
+
+  .combined-section {
+    flex-direction: column; /* Mengatur tata letak menjadi kolom */
+    gap: 0; /* Menghapus jarak antara sidebar dan form order */
+  }
+
+  .menu-buttons {
+    flex-wrap: wrap; /* Membungkus tombol ke baris berikutnya jika diperlukan */
+    gap: 10px; /* Jarak antara tombol */
+  }
+
+  .scroll-container {
+    max-height: 500px; /* Maksimum tinggi untuk scroll container di perangkat mobile */
+  }
+
+  .order-summary .order-table {
+    width: 100%; /* Lebar tabel 100% dari kontainer */
+  }
+}
+
+/* Media Queries untuk perangkat kecil (lebih kecil dari 576px) */
+@media screen and (max-width: 576px) {
+  .menu-section {
+    padding: 10px; /* Padding lebih kecil di perangkat kecil */
+  }
+
+  .order-summary {
+    padding: 10px; /* Padding lebih kecil di perangkat kecil */
+  }
+}
+
 
 
 </style> 
@@ -281,6 +368,7 @@ body {
             </div>
             <nav class="dash-menu">
               <ul class="list-unstyled">
+                <li><a href="mencoba.html"><i class="bi bi-a-door"></i>MENCOBA</a></li>
                 <li><a href="dashboard.html"><i class="bi bi-house-door"></i> Dashboard</a></li>
                 <li><a href="order.html"><i class="bi bi-cart-plus"></i> Order</a></li>
                 <li><a href="tabel.html"><i class="bi bi-list"></i> Lihat Pesanan</a></li>
@@ -365,28 +453,28 @@ body {
       </div>
     
       <!-- Kolom Kanan -->
-      <div class="col-md-3">
-        <!-- Struk Pemesanan -->
-        <section class="order-summary">
-          <h2>Struk Pemesanan</h2>
-          <table class="order-table">
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th>Harga</th>
-                <th>Qty</th>
-                <th>Jumlah</th>
-                <th>Hapus</th>
-              </tr>
-            </thead>
-            <tbody id="orderDetails">
-              <!-- Order details will be displayed here -->
-            </tbody>
-          </table>
-          <div class="total-amount">Total: Rp <span id="totalAmount">0</span></div>
-        </section>
-      </div>
-    </div>
+<div class="col-md-3">
+  <!-- Struk Pemesanan -->
+  <section class="order-summary">
+    <h2>Struk Pemesanan</h2>
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Harga</th>
+          <th>Qty</th>
+          <th>Jumlah</th>
+          <th>Hapus</th>
+        </tr>
+      </thead>
+      <tbody id="orderDetails">
+        <!-- Order details will be dynamically added here -->
+      </tbody>
+    </table>
+    <div class="total-amount">Total: Rp <span id="totalAmount">0</span></div>
+  </section>
+</div>
+
     
 
     
@@ -428,24 +516,33 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 // Function to toggle visibility of sections
-function toggleSection(sectionId) {
-  const sections = document.querySelectorAll('.item-list');
-  sections.forEach(section => {
-    if (section.id === sectionId) {
-      section.style.display = section.style.display === 'none' ? 'block' : 'none';
-    } else {
-      section.style.display = 'none';
-    }
-  });
+function toggleSection(id) {
+  // Menghapus kelas aktif dari semua tombol
+  const buttons = document.querySelectorAll('.menu-toggle');
+  buttons.forEach(button => button.classList.remove('active'));
+
+  // Menambahkan kelas aktif pada tombol yang diklik
+  const clickedButton = Array.from(buttons).find(button => button.onclick.toString().includes(id));
+  if (clickedButton) {
+    clickedButton.classList.add('active');
+  }
+
+  // Menampilkan item list yang sesuai
+  const allLists = document.querySelectorAll('.item-list');
+  allLists.forEach(list => list.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 }
 
-// Function to show all sections
 function showAllItems() {
-  const sections = document.querySelectorAll('.item-list');
-  sections.forEach(section => {
-    section.style.display = 'block';
-  });
+  // Menghapus kelas aktif dari semua tombol
+  const buttons = document.querySelectorAll('.menu-toggle');
+  buttons.forEach(button => button.classList.remove('active'));
+
+  // Menampilkan semua item list
+  const allLists = document.querySelectorAll('.item-list');
+  allLists.forEach(list => list.style.display = 'block');
 }
+
 
 // Function to load data from Firestore
 function loadItems() {
@@ -472,6 +569,8 @@ window.onload = function() {
   showAllItems(); // Show all categories by default
   loadItems(); // Load menu items from Firestore
 };
+
+
 
 </script>
 

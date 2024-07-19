@@ -4,13 +4,173 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
   <script defer src="./assets/js/dashboard.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
 </head>
 <body>
-  <!-- Content for logged-in users -->
-  <h1>Welcome to the Dashboard</h1>
+  <!-- =============== Navigation ================ -->
+  <div class="container">
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="fish"></ion-icon>
+                    </span>
+                    <span class="title">049 huda</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="active">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="./pages/profile.html">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </span>
+                    <span class="title">My profile</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="./pages/form.html">
+                    <span class="icon">
+                        <ion-icon name="chatbubble-outline"></ion-icon>
+                    </span>
+                    <span class="title">Form</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="./pages/hobby.html" class="nav-link" data-page="hobby">
+                    <span class="icon">
+                        <ion-icon name="rocket-sharp"></ion-icon>
+                    </span>
+                    <span class="title">Hobby</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- ========================= Main ==================== -->
+    
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+
+            <div class="search">
+                <h2>Dashboard</h2>
+            </div>
+
+            <div class="user">
+                <img src="assets/imgs/huda1.jpg" alt="">
+            </div>
+        </div>
+
+        <!-- ======================= Cards ================== -->
+        <div class="cardBox">
+            <!-- Filter Form -->
+            <div class="filter">
+                <label for="startDate">Tanggal Mulai:</label>
+                <input type="date" id="startDate">
+                <label for="endDate">Tanggal Akhir:</label>
+                <input type="date" id="endDate">
+                <label for="period">Periode:</label>
+                <select id="period">
+                    <option value="daily">Harian</option>
+                    <option value="weekly">Mingguan</option>
+                    <option value="monthly">Bulanan</option>
+                </select>
+                <button onclick="loadChartData()">Tampilkan</button>
+            </div>
+        </div>
+
+        <!-- ================ Order Details List ================= -->
+        <div class="details">
+            <div class="recentOrders">
+                <h4>Deskripsi</h4>
+                <div class="description">
+                    <canvas id="orderChart" width="400" height="200"></canvas>
+                    <canvas id="orderPieChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- ================= New Customers ================ -->
+            <div class="recentCustomers">
+                <div class="cardHeader">
+                    <h2>pertemanan</h2>
+                </div>
+
+                <table>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="assets/imgs/agung.jpg" alt=""></div>
+                        </td>
+                        <td>
+                            <h4>agung <br> <span>gamping</span></h4>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="assets/imgs/buyya.jpg" alt=""></div>
+                        </td>
+                        <td>
+                            <h4>buya <br> <span>gamping</span></h4>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="assets/imgs/izal.jpg" alt=""></div>
+                        </td>
+                        <td>
+                            <h4>izal <br> <span>godean</span></h4>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="assets/imgs/ozan.jpg" alt=""></div>
+                        </td>
+                        <td>
+                            <h4>ozan <br> <span>kosputih</span></h4>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="content">
+    <!-- Konten dinamis akan dimuat di sini -->
+</div>
+
+
+<!-- =========== Scripts =========  -->
+<script src="assets/js/main.js"></script>
+
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 
 
 
@@ -19,5 +179,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 </body>
 </html>
