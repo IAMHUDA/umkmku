@@ -15,9 +15,15 @@ var firebaseConfig = {
   // Inisialisasi Firestore
   var db = firebase.firestore();
   
-  // Fungsi untuk memuat data pesanan dari Firestore
-// Fungsi untuk memuat data pesanan dari Firestore
-// Fungsi untuk memuat data pesanan dari Firestore
+  document.addEventListener('DOMContentLoaded', () => {
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = '404.html'; // Redirect ke halaman 404 jika tidak terautentikasi
+        }
+    });
+});
+
+
 function loadOrders() {
     const ordersTableBody = document.getElementById('ordersTableBody');
     ordersTableBody.innerHTML = ''; // Kosongkan tabel sebelum memuat data
