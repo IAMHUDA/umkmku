@@ -14,13 +14,15 @@ var firebaseConfig = {
   
   // Inisialisasi Firestore
   var db = firebase.firestore();
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    auth.onAuthStateChanged((user) => {
-        if (!user) {
-            window.location.href = '404.html'; // Redirect ke halaman 404 jika tidak terautentikasi
-        }
-    });
+  const auth = firebase.auth();
+
+// Firebase configuration
+document.addEventListener('DOMContentLoaded', () => {
+  auth.onAuthStateChanged((user) => {
+      if (!user) {
+          window.location.href = '404.html'; // Redirect ke halaman 404 jika tidak terautentikasi
+      }
+  });
 });
 
 

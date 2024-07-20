@@ -512,8 +512,19 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+
 // Initialize Firestore
 var db = firebase.firestore();
+const auth = firebase.auth();
+
+// Firebase configuration
+document.addEventListener('DOMContentLoaded', () => {
+  auth.onAuthStateChanged((user) => {
+      if (!user) {
+          window.location.href = '404.html'; // Redirect ke halaman 404 jika tidak terautentikasi
+      }
+  });
+});
 
 // Function to toggle visibility of sections
 function toggleSection(id) {
