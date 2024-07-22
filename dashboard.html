@@ -10,9 +10,11 @@
   <script defer src="./assets/js/dashboard.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
   <link rel="stylesheet" href="./assets/css/dashboard.css">
 </head>
 <body>
+    
   <!-- =============== Navigation ================ -->
   <div class="container">
     <div class="navigation">
@@ -22,7 +24,7 @@
                     <span class="icon">
                         <ion-icon name="fish"></ion-icon>
                     </span>
-                    <span class="title">049 huda</span>
+                    <span class="title">kantin 225</span>
                 </a>
             </li>
 
@@ -36,29 +38,20 @@
             </li>
 
             <li>
-                <a href="./pages/profile.html">
+                <a href="./order.html">
                     <span class="icon">
                         <ion-icon name="people-outline"></ion-icon>
                     </span>
-                    <span class="title">My profile</span>
+                    <span class="title">order skuy</span>
                 </a>
             </li>
 
             <li>
-                <a href="./pages/form.html">
+                <a href="./tabel.html">
                     <span class="icon">
                         <ion-icon name="chatbubble-outline"></ion-icon>
                     </span>
-                    <span class="title">Form</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="./pages/hobby.html" class="nav-link" data-page="hobby">
-                    <span class="icon">
-                        <ion-icon name="rocket-sharp"></ion-icon>
-                    </span>
-                    <span class="title">Hobby</span>
+                    <span class="title">data penjualan</span>
                 </a>
             </li>
 
@@ -83,85 +76,58 @@
         </div>
 
         <!-- ======================= Cards ================== -->
-        <div class="cardBox">
-            <!-- Filter Form -->
-            <div class="filter">
-                <label for="startDate">Tanggal Mulai:</label>
-                <input type="date" id="startDate">
-                <label for="endDate">Tanggal Akhir:</label>
-                <input type="date" id="endDate">
-                <label for="period">Periode:</label>
-                <select id="period">
-                    <option value="daily">Harian</option>
-                    <option value="weekly">Mingguan</option>
-                    <option value="monthly">Bulanan</option>
-                </select>
-                <button onclick="loadChartData()">Tampilkan</button>
+
+<div class="details1 bg-white p-4 rounded-lg shadow-lg mb-8">
+    <div class="filter space-y-4">
+        <label for="startDate" class="block text-gray-700">Cari Berdasarkan Tanggal</label>
+        <input type="date" id="startDate" class="w-full p-2 border rounded-md">
+
+        <label for="period" class="block text-gray-700">Cari Berdasarkan Per Hari, Per Minggu, Per Bulan, Per Tahun</label>
+        <select id="period" class="w-full p-2 border rounded-md">
+            <option value="daily">Harian</option>
+            <option value="weekly">Mingguan</option>
+            <option value="monthly">Bulanan</option>
+            <option value="yearly">Tahunan</option>
+        </select>
+
+        <button onclick="loadChartData()" class="w-full bg-blue-500 text-white p-2 rounded-md">Tampilkan</button>
+    </div>
+    <h4 class="mt-4 text-gray-700">Deskripsi</h4>
+    <div class="extraCharts grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="card bg-white p-4 rounded-lg shadow-md">
+            <div class="chart">
+                <canvas id="orderChart" width="400" height="200"></canvas>
             </div>
         </div>
-
-        <!-- ================ Order Details List ================= -->
-        <div class="details">
-            <div class="recentOrders">
-                <h4>Deskripsi</h4>
-                <div class="description">
-                    <canvas id="orderChart" width="400" height="200"></canvas>
-                    <canvas id="orderPieChart" width="400" height="200"></canvas>
-                </div>
-            </div>
-
-            <!-- ================= New Customers ================ -->
-            <div class="recentCustomers">
-                <div class="cardHeader">
-                    <h2>pertemanan</h2>
-                </div>
-
-                <table>
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/agung.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>agung <br> <span>gamping</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/buyya.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>buya <br> <span>gamping</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/izal.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>izal <br> <span>godean</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/ozan.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>ozan <br> <span>kosputih</span></h4>
-                        </td>
-                    </tr>
-
-                </table>
+        <div class="card bg-white p-4 rounded-lg shadow-md">
+            <div class="chart">
+                <canvas id="orderPieChart" width="300" height="200"></canvas>
             </div>
         </div>
     </div>
 </div>
 
-<div id="content">
-    <!-- Konten dinamis akan dimuat di sini -->
+<!-- Order Details List -->
+<div class="details bg-white p-4 rounded-lg shadow-lg">
+    <div class="extraCharts grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="card searchCard bg-white p-4 rounded-lg shadow-md">
+            <input type="text" id="nameSearch" placeholder="Cari berdasarkan nama" oninput="searchByName()" class="w-full p-2 border rounded-md">
+        </div>
+        <div class="card bg-white p-4 rounded-lg shadow-md">
+            <div class="chart">
+                <canvas id="nameBarChart" width="300" height="200"></canvas>
+            </div>
+        </div>
+        <div class="card bg-white p-4 rounded-lg shadow-md">
+            <div class="chart">
+                <canvas id="datePieChart" width="300" height="200"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+    </div>
+</div>
+
 
 
 <!-- =========== Scripts =========  -->

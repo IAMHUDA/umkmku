@@ -1,146 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Chart</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script defer src="./assets/js/order.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
 
-  <!-- font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
 </head>
+
+<style>
+
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: blue;
+}
+
+.btn-danger {
+    background-color: red;
+}
+
+.btn-secondary {
+    background-color: grey;
+}
+
+/* Container for both sections */
+.order-section {
+    
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Add some space between the sections */
+}
+
+/* Style for the order form section */
+.order-form-section {
+
+    padding: 20px;
+    flex: 1; /* Takes up half of the available width */
+    padding: 20px;
+    margin-right: 10px;
+    background-color: #f9f9f9; /* Light background color for better visibility */
+    border: 1px solid #ddd; /* Add a border for definition */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Style for the order summary section */
+.order-summary-section {
+    padding: 20px;
+    flex: 1; /* Takes up the other half of the available width */
+    padding: 20px;
+    margin-left: 10px;
+    background-color: #f9f9f9; /* Light background color for better visibility */
+    border: 1px solid #ddd; /* Add a border for definition */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Common styles for form elements */
+.order-form-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+/* Table styles */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Style untuk kontainer tabel di dalam Ringkasan Pesanan */
+.order-table-container {
+    max-height: 300px; /* Atur tinggi maksimum kontainer tabel sesuai kebutuhan */
+    overflow-y: auto; /* Tambahkan scroll vertikal jika konten melebihi tinggi kontainer */
+    margin-bottom: 20px; /* Jarak bawah dari total harga */
+}
+
+/* Style tambahan jika diperlukan untuk memastikan total harga tetap di bawah tabel */
+.total-amount {
+    background-color: #be2623; /* Red background color */
+  color: #fff; /* White text color */
+  padding: 15px; /* Padding inside the container */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 1.2em; /* Slightly larger font size */
+  font-weight: bold; /* Make the text bold */
+  text-align: center; /* Center the text */
+  margin-top: 20px; /* Space above the container */
+  border: 1px solid #a42b23; /* Optional: Darker red border */
+}
+
+thead {
+    border-radius: 100px;
+    background-color: #be2623; /* Red background color */
+    color: #fff; /* White text color */
+  }
+  
+  thead th {
+    padding: 10px; /* Padding inside each table header cell */
+    text-align: left; /* Align text to the left inside header cells */
+    border-bottom: 2px solid #fff; /* Optional: White border below header cells */
+    font-weight: bold; /* Make header text bold */
+  }
+  
+  /* Optional: Styling for table rows and cells */
+  table {
+    width: 100%; /* Full width of the table */
+    border-collapse: collapse; /* Collapse borders between cells */
+  }
+  
+  table th, table td {
+    border: 1px solid #ddd; /* Border for table cells */
+  }
+
+
+.menu-section {
+  padding: 20px;
+}
+
+.menu-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.menu-layout {
+
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap to the next line if needed */
+  gap: 20px; /* Space between the boxes */
+}
+
+.item-list {
+  flex: 1 1 22%; /* Each box takes up 22% of the container's width */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional shadow for a nicer look */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  max-height: 400px; /* Set max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.item-list h4 {
+    font-size: 1.5em; /* Larger font size for the section title */
+    margin-bottom: 15px; /* Space below the section title */
+    color: #333; /* Darker text color for the title */
+    border-bottom: 2px solid #be2623; /* Blue underline for the title */
+    padding-bottom: 5px; /* Padding below the title text */
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.item-image {
+  max-width: 150px;
+  max-height: 150px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.item p {
+  margin: 0;
+}
+
+  
+  .item-list img {
+    max-width: 50%; /* Ensure images fit within their container */
+    height: auto;    /* Maintain aspect ratio */
+    border-radius: 4px; /* Optional: Add border-radius for rounded corners */
+    margin-bottom: 10px; /* Space below each image */
+  }
+
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .quantity-controls button {
+    margin: 0 5px;
+  }
+  
+  .quantity-controls span {
+    width: 30px;
+    text-align: center;
+  }
+
+  /* Styling for item details */
+.item-details {
+ 
+  }
+  
+  .item-details h5 {
+    font-size: 1.5em; /* Larger font size for item name */
+  }
+  
+  .item-details p {
+    padding-top:10px;
+    font-size: 1.1em; /* Font size for price */
+    margin: 0 0 10px; /* Space below the price */
+  }
+  
+  .item-details .btn {
+    display: block;
+    max-width: 100%; /* Make button take the full width */
+    font-size: 1em; /* Font size for button text */
+    text-align: center; /* Center the button text */
+  }
+  
+
+/* Basic styling for the button */
+.btn {
+    display: inline-block;
+    font-size: 1em; /* Font size of button text */
+    font-weight: bold; /* Make button text bold */
+    text-align: center; /* Center the text inside the button */
+    color: #fff; /* Text color */
+    background-color: #be2623; /* Primary background color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+  
+  /* Button hover effect */
+  .btn:hover {
+    background-color: #ad1e1c; /* Darker shade on hover */
+    color: white;
+  }
+  
+  /* Button focus effect */
+  .btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5); /* Custom focus shadow */
+  }
+  
+  /* Button disabled state */
+  .btn:disabled {
+    background-color: #c0c0c0; /* Grey background for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+  }
+  
+
+  /* Responsive styles */
+@media (max-width: 768px) {
+    .order-section {
+        flex-direction: column;
+    }
+    
+    .order-form-section {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .order-summary-section {
+        margin-left: 0;
+    }
+}
+
+/* Styles for mobile screens */
+@media (max-width: 768px) {
+    .menu-layout {
+      display: flex;
+      flex-direction: column; /* Stack items vertically on mobile */
+    }
+    
+    .item-list {
+      flex: 1 1 auto; /* Allow item-list to grow */
+      margin: 10px 0; /* Margin between item-lists */
+      padding: 10px; /* Add padding for better spacing */
+    }
+  
+    .item-image{
+        max-width: 180px;
+        max-height: 180px;
+    }
+  }
+  
+
+  .icons {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px; 
+    display: block;
+}
+
+.logo-icons {
+
+    max-width: 50px;
+    margin-top: 20px;
+    margin-left: 5px;
+    width: 10rem;
+    scale: 150%;
+}
+
+.title {
+    font-size: 1.2em; /* Adjust size as needed */
+    vertical-align: middle;
+    display: inline-block;
+}
+
+</style>
+
 <body>
-  <div class="container mt-5">
-    <div class="flex flex-col md:flex-row justify-between items-center mb-3">
-      <h1 class="text-2xl font-bold mb-3 md:mb-0">Grafik Pesanan</h1>
-      <a href="order.html" class="btn btn-primary">Kembali ke Halaman Utama</a>
-      <a href="dashboard.html" class="btn btn-primary">DASBOD</a>
+<!-- =============== Navigation ================ -->
+<div class="container">
+    <div class="navigation">
+      <ul>
+        <li>
+          <a href="#">
+            <span class="icons">
+              <img src="./assets/images/logo/kantin225new.png" class="logo-icons">
+            </span>
+          </a>
+        </li>
+  
+        <li>
+          <a href="#" class="active">
+            <span class="icon">
+              <ion-icon name="home-outline"></ion-icon>
+            </span>
+            <span class="title">Dashboard</span>
+          </a>
+        </li>
+  
+        <li>
+          <a href="./pages/profile.html">
+            <span class="icon">
+              <ion-icon name="list-outline"></ion-icon> <!-- Changed to list-outline -->
+            </span>
+            <span class="title">Order</span>
+          </a>
+        </li>
+  
+        <li>
+          <a href="./pages/form.html">
+            <span class="icon">
+              <ion-icon name="document-text-outline"></ion-icon> <!-- Changed to document-text-outline -->
+            </span>
+            <span class="title">Data</span>
+          </a>
+        </li>
+      </ul>
     </div>
-
-    <div class="mb-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-      <input type="text" id="searchCustomerName" class="form-control" placeholder="Cari Nama Pelanggan" />
-      <input type="date" id="searchOrderDate" class="form-control" />
-      <input type="text" id="searchPaymentMethod" class="form-control" placeholder="Cari Metode Pembayaran" />
-      <input type="text" id="searchPaymentStatus" class="form-control" placeholder="Cari Status Pembayaran" />
-      <button onclick="searchOrders()" class="btn btn-blue bg-blue-500 text-white">Search</button>
-    </div>
-
-    <canvas id="ordersChart" width="100%" height="50vh"></canvas>
   </div>
+  
+
+    <!-- ========================= Main ==================== -->
+    
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <div class="search">
+                <h2>Order</h2>
+            </div>
+            <div class="user">
+                <img src="./assets/images/logo/kantin225merah.png" alt="">
+            </div>
+        </div>
+
+        <!-- ========================= ATAS ==================== -->
+
+<!-- Order Section -->
+<div class="container">
+    <div class="order-section">
+        <!-- Formulir Pesanan (Kiri) -->
+        <section class="order-form-section">
+            <h4 class="order-form-title">Order Form</h4>
+            <form class="order-form" onsubmit="saveOrder(); return false;">
+                <div class="form-group">
+                    <label for="customerName">Nama Pelanggan</label>
+                    <input type="text" id="customerName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="orderDate">Tanggal Pemesanan</label>
+                    <input type="date" id="orderDate" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Metode Pembayaran</label>
+                    <select id="paymentMethod" class="form-select" required>
+                        <option value="cash">Cash</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paymentStatus">Status Pembayaran</label>
+                    <select id="paymentStatus" class="form-select" required>
+                        <option value="paid">Sudah Dibayar</option>
+                        <option value="unpaid">Belum Dibayar</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='tabel.html'">Lihat Semua Pesanan</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Ringkasan Pesanan (Kanan) -->
+        <section class="order-summary-section">
+            <h2>Struk Pemesanan</h2>
+            <div class="order-table-container">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Qty</th>
+                            <th>Jumlah</th>
+                            <th>Hapus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderDetails">
+                        <!-- Order details will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="total-amount">Total: Rp <span id="totalAmount">0</span></div>
+        </section>
+    </div>
+</div>
+
+<!-- ========================= TENGAH ==================== -->
+
+<!-- Kolom Tengah -->
+<div class="col-md-12">
+    <section class="menu-section">
+      <h3 class="menu-title">Menu</h3>
+      <div class="menu-layout">
+        <div class="item-list" id="makananList">
+          <h4>Makanan</h4>
+          <!-- Makanan items will be dynamically generated here -->
+        </div>
+        <div class="item-list" id="minumanList">
+          <h4>Minuman</h4>
+          <!-- Minuman items will be dynamically generated here -->
+        </div>
+        <div class="item-list" id="jajananList">
+          <h4>Jajanan</h4>
+          <!-- Jajanan items will be dynamically generated here -->
+        </div>
+        <div class="item-list" id="toppingList">
+          <h4>Topping</h4>
+          <!-- Topping items will be dynamically generated here -->
+        </div>
+      </div>
+    </section>
+  </div>
+<!-- ========================= BAWAH ==================== -->
+
+<!-- =========== Scripts =========  -->
+<script src="assets/js/main.js"></script>
+
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-
   <script>
-    // Konfigurasi Firebase
+// Firebase configuration
     var firebaseConfig = {
-        apiKey: "AIzaSyD6zN162LNFtTV_NnRpok6YctnYmDr5pNlyT2bRjXh0",
-        authDomain: "umkmku-6fcce.firebaseapp.com",
-        projectId: "umkmku-6fcce",
-        storageBucket: "umkmku-6fcce.appspot.com",
-        messagingSenderId: "727965779260",
-        appId: "1:727965779260:web:5dabdd7694f8b81c30ca39",
-        measurementId: "G-QGJ67SZ6WY"
+      apiKey: "AIzaSyD6zN162LNFtTV_NnRpAb0tVZWe8VS2Zqo",
+      authDomain: "umkmku-6fcce.firebaseapp.com",
+      projectId: "umkmku-6fcce",
+      storageBucket: "umkmku-6fcce.appspot.com",
+      messagingSenderId: "727965779260",
+      appId: "1:727965779260:web:5dabdd7694f8b81c30ca39",
+      measurementId: "G-QGJ67SZ6WY"
     };
     
-    // Inisialisasi Firebase
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     
-    // Inisialisasi Firestore
+    // Initialize Firestore
     var db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    // Firebase configuration
+    document.addEventListener('DOMContentLoaded', () => {
+      auth.onAuthStateChanged((user) => {
+          if (!user) {
+              window.location.href = '404.html'; // Redirect ke halaman 404 jika tidak terautentikasi
+          }
+      });
+    });
 
-    // Function to load and display orders
-    function loadOrders(filters = {}) {
-        const chartContext = document.getElementById('ordersChart').getContext('2d');
-        const labels = [];
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Total Pesanan',
-                data: [],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        };
-        
-        let query = db.collection('orders');
-        
-        if (filters.customerName) {
-            query = query.where('customerName', '==', filters.customerName);
-        }
-        if (filters.orderDate) {
-            query = query.where('orderDate', '==', filters.orderDate);
-        }
-        if (filters.paymentMethod) {
-            query = query.where('paymentMethod', '==', filters.paymentMethod);
-        }
-        if (filters.paymentStatus) {
-            query = query.where('paymentStatus', '==', filters.paymentStatus);
-        }
+    // Function to toggle visibility of sections
+    function toggleSection(id) {
+      // Menghapus kelas aktif dari semua tombol
+      const buttons = document.querySelectorAll('.menu-toggle');
+      buttons.forEach(button => button.classList.remove('active'));
 
-        query.get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const order = doc.data();
-                labels.push(order.customerName); // Adjust as needed
-                data.datasets[0].data.push(order.totalAmount); // Adjust as needed
-            });
+      // Menambahkan kelas aktif pada tombol yang diklik
+      const clickedButton = Array.from(buttons).find(button => button.onclick.toString().includes(id));
+      if (clickedButton) {
+        clickedButton.classList.add('active');
+      }
 
-            if (window.ordersChart) {
-                window.ordersChart.destroy();
-            }
+      // Menampilkan item list yang sesuai
+      const allLists = document.querySelectorAll('.item-list');
+      allLists.forEach(list => list.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
 
-            window.ordersChart = new Chart(chartContext, {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Total: ${context.raw}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }).catch(error => {
-            console.error('Error getting orders: ', error);
-            Swal.fire('Gagal!', 'Terjadi kesalahan saat memuat pesanan.', 'error');
+    function showAllItems() {
+      // Menghapus kelas aktif dari semua tombol
+      const buttons = document.querySelectorAll('.menu-toggle');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      // Menampilkan semua item list
+      const allLists = document.querySelectorAll('.item-list');
+      allLists.forEach(list => list.style.display = 'block');
+    }
+
+    // Function to load data from Firestore
+    function loadItems() {
+      db.collection('menuItems').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const category = data.category;
+          const itemList = document.getElementById(category + 'List');
+          if (itemList) {
+            itemList.innerHTML += `
+              <div class="item">
+                <h4>${data.name}</h4>
+                <p>${data.description}</p>
+                <p>Price: ${data.price}</p>
+              </div>
+            `;
+          }
         });
+      });
     }
-    
-    // Call loadOrders when the page loads
-    window.onload = () => loadOrders();
-    
-    // Function to search and filter orders
-    function searchOrders() {
-        const customerName = document.getElementById('searchCustomerName').value;
-        const orderDate = document.getElementById('searchOrderDate').value;
-        const paymentMethod = document.getElementById('searchPaymentMethod').value;
-        const paymentStatus = document.getElementById('searchPaymentStatus').value;
 
-        const filters = {
-            customerName: customerName || undefined,
-            orderDate: orderDate || undefined,
-            paymentMethod: paymentMethod || undefined,
-            paymentStatus: paymentStatus || undefined
-        };
-        
-        loadOrders(filters);
+    // Set default condition on page load
+    window.onload = function() {
+      showAllItems(); // Show all categories by default
+      loadItems(); // Load menu items from Firestore
+    };
+    </script>
+
+    <script>
+
+  // Function to add an item to the order summary
+  function addItemToOrder(name, price) {
+    const orderDetails = document.getElementById('orderDetails');
+    const existingItem = document.getElementById(name);
+
+    if (existingItem) {
+        // Update quantity and total if item already exists
+        const quantitySpan = existingItem.querySelector('.qty');
+        const quantity = parseInt(quantitySpan.textContent, 10);
+        quantitySpan.textContent = quantity + 1;
+        updateTotal();
+    } else {
+        // Add new item to the order summary
+        const newRow = document.createElement('tr');
+        newRow.id = name;
+        newRow.innerHTML = `
+            <td>${name}</td>
+            <td><input type="number" class="item-price" value="${price}" min="0" step="1000" /></td>
+            <td>
+                <div class="quantity-controls">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQuantity('${name}', -1)">-</button>
+                    <span class="qty">1</span>
+                    <button class="btn btn-secondary btn-sm" onclick="changeQuantity('${name}', 1)">+</button>
+                </div>
+            </td>
+            <td class="item-total">${price}</td>
+            <td><button class="btn btn-primary btn-sm" onclick="editItem('${name}')">Edit</button></td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeItem('${name}')">Hapus</button></td>
+        `;
+        orderDetails.appendChild(newRow);
+        updateTotal();
     }
-  </script>
+}
+
+// Function to edit an item in the order summary
+function editItem(name) {
+    const itemRow = document.getElementById(name);
+    if (itemRow) {
+        const priceInput = itemRow.querySelector('.item-price');
+        const newPrice = parseInt(priceInput.value, 10);
+        const quantitySpan = itemRow.querySelector('.qty');
+        const quantity = parseInt(quantitySpan.textContent, 10);
+        
+        if (newPrice > 0) {
+            itemRow.querySelector('.item-total').textContent = newPrice * quantity;
+            updateTotal();
+        }
+    }
+}
+
+// Function to change item quantity
+function changeQuantity(name, change) {
+    const itemRow = document.getElementById(name);
+    if (itemRow) {
+        const quantitySpan = itemRow.querySelector('.qty');
+        let currentQuantity = parseInt(quantitySpan.textContent, 10);
+        currentQuantity = Math.max(1, currentQuantity + change); // Prevent quantity less than 1
+        quantitySpan.textContent = currentQuantity;
+
+        // Update total for the item
+        const price = parseInt(itemRow.querySelector('.item-price').value, 10);
+        itemRow.querySelector('.item-total').textContent = price * currentQuantity;
+
+        updateTotal();
+    }
+}
+
+// Function to remove an item from the order summary
+function removeItem(name) {
+    const itemRow = document.getElementById(name);
+    if (itemRow) {
+        itemRow.remove();
+        updateTotal();
+    }
+}
+
+// Function to update the total amount
+function updateTotal() {
+    let total = 0;
+    const itemRows = document.querySelectorAll('#orderDetails tr');
+    itemRows.forEach(row => {
+        const itemTotal = parseInt(row.querySelector('.item-total').textContent, 10);
+        total += itemTotal;
+    });
+    document.getElementById('totalAmount').textContent = total;
+}
+
+</script>
 </body>
 </html>

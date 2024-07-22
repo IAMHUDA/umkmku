@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <img src="${item.img}" alt="${item.name}" class="item-image">
             <div class="item-details">
               <h5>${item.name}</h5>
-              <p>Harga: Rp ${item.price}</p>
+              <p>Rp ${item.price}</p>
               <button class="btn btn-primary" onclick="addItem(${item.id}, '${item.name}', ${item.price})">Tambahkan</button>
             </div>
           </div>
